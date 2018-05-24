@@ -96,8 +96,41 @@ public class OceanExplorer extends Application {
 			}
 		}
 	}
+	
+		private void startSailing() {
+		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent ke) {
+				switch (ke.getCode()) {
+				case RIGHT:
+					ship.goEast();
+					break;
+				case LEFT:
+					ship.goWest();
+					break;
+				case UP:
+					ship.goNorth();
+					break;
+				case DOWN:
+					ship.goSouth();
+					break;
+				default:
+					break;
+				}
 
-	// }
+				//shipImageView.setX(ship.getShipLocation().x * scalingFactor);
+				//shipImageView.setY(ship.getShipLocation().y * scalingFactor);
+
+				//pirateShipView.setX(pirateShip.getPirateShipLocation().x * scalingFactor);
+				//pirateShipView.setY(pirateShip.getPirateShipLocation().y * scalingFactor);
+
+				//sShip.setX(pirate.getPirateShipLocation().x * scalingFactor);
+				//sShip.setY(pirate.getPirateShipLocation().y * scalingFactor);
+			}
+		});
+	}
+
+	
 
 	public static void main(String[] args) {
 		launch(args);
