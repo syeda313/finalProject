@@ -1,51 +1,73 @@
 package project;
 
+import java.awt.Point;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 public class ShipColumbus implements Ship {
 	List<Observer> observers = new LinkedList<Observer>();
-	OceanMap OceanMap;
-	Point ShipLocation;
+	OceanMap oceanMap;
+	Point shipLocation;
+	int dimensions;
+	Random rand = new Random();
 
 	public ShipColumbus(OceanMap oceanMap) {
-		this.OceanMap = oceanMap;
+		this.oceanMap = oceanMap;
+		dimensions = oceanMap.getDimensions();
+		shipLocation = placeShip();
 
-	}
-
-	public Point getShipLocation() {
-		return ShipLocation;
 	}
 	
+    private Point placeShip(){
+        boolean placedShip = false;
+        int x=0,y=0;
+        while(!placedShip){
+            x = rand.nextInt(dimensions);
+            y = rand.nextInt(dimensions);
+            if(oceanMap.getMap()[x][y] == 0){
+                placedShip = true;
+            }
+        }
+        return new Point(x,y);
+    }
+
+	public Point getShipLocation() {
+		return shipLocation;
+	}
+	
+	
 	public void goEast() {
-		if (ShipLocation.x < OceanMap.getDimensions() - 1 && OceanMap.isOcean(ShipLocation.x + 1, ShipLocation.y)) {
-			ShipLocation.x++;
-		}
-		notifyObservers();
+    	if (shipLocation.x < oceanMap.getDimensions() - 1
+    			&& oceanMap.isOcean(shipLocation.x + 1, shipLocation.y)) {
+    		shipLocation.x++;
+    	}
+    	notifyObservers();
 
 	}
 
 	public void goWest() {
-		if (ShipLocation.x > 0 && OceanMap.isOcean(ShipLocation.x - 1, ShipLocation.y)) {
-			ShipLocation.x--;
+		if (shipLocation.x > 0 && oceanMap.isOcean(shipLocation.x - 1, shipLocation.y)) {
+			shipLocation.x--;
 		}
 		notifyObservers();
 	}
 
 	public void goNorth() {
-		if (ShipLocation.y > 0 && OceanMap.isOcean(ShipLocation.x, ShipLocation.y - 1)) {
-			ShipLocation.y--;
+		if (shipLocation.y > 0 && oceanMap.isOcean(shipLocation.x, shipLocation.y - 1)) {
+			shipLocation.y--;
 		}
 		notifyObservers();
 	}
 
 	public void goSouth() {
-		if (ShipLocation.y < OceanMap.getDimensions() - 1 && OceanMap.isOcean(ShipLocation.x, ShipLocation.y + 1)) {
-			ShipLocation.y++;
+		if (shipLocation.y < oceanMap.getDimensions() - 1
+				&& oceanMap.isOcean(shipLocation.x, shipLocation.y + 1)) {
+			shipLocation.y++;
 		}
 		notifyObservers();
-
 	}
+
 
 	@Override
 	public void registerObserver(Observer o) {
@@ -67,5 +89,6 @@ public class ShipColumbus implements Ship {
 		// TODO Auto-generated method stub
 
 	}
+
 
 }
