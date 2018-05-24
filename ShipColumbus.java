@@ -8,8 +8,8 @@ public class ShipColumbus implements Ship {
 	OceanMap OceanMap;
 	Point ShipLocation;
 
-	public ShipColumbus(OceanMap oceamMap) {
-		this.OceanMap = oceamMap;
+	public ShipColumbus(OceanMap oceanMap) {
+		this.OceanMap = oceanMap;
 
 	}
 
@@ -17,37 +17,35 @@ public class ShipColumbus implements Ship {
 		return ShipLocation;
 	}
 	
-	
-		public void goEast() {
-		if (currentLocation.x < oceanMap.getDimensions() - 1
-				&& oceanMap.isOcean(currentLocation.x + 1, currentLocation.y)) {
-			currentLocation.x++;
+	public void goEast() {
+		if (ShipLocation.x < OceanMap.getDimensions() - 1 && OceanMap.isOcean(ShipLocation.x + 1, ShipLocation.y)) {
+			ShipLocation.x++;
 		}
 		notifyObservers();
 
 	}
 
 	public void goWest() {
-		if (currentLocation.x > 0 && oceanMap.isOcean(currentLocation.x - 1, currentLocation.y)) {
-			currentLocation.x--;
+		if (ShipLocation.x > 0 && OceanMap.isOcean(ShipLocation.x - 1, ShipLocation.y)) {
+			ShipLocation.x--;
 		}
 		notifyObservers();
 	}
 
 	public void goNorth() {
-		if (currentLocation.y > 0 && oceanMap.isOcean(currentLocation.x, currentLocation.y - 1)) {
-			currentLocation.y--;
+		if (ShipLocation.y > 0 && OceanMap.isOcean(ShipLocation.x, ShipLocation.y - 1)) {
+			ShipLocation.y--;
 		}
 		notifyObservers();
 	}
 
 	public void goSouth() {
-		if (currentLocation.y < oceanMap.getDimensions() - 1
-				&& oceanMap.isOcean(currentLocation.x, currentLocation.y + 1)) {
-			currentLocation.y++;
+		if (ShipLocation.y < OceanMap.getDimensions() - 1 && OceanMap.isOcean(ShipLocation.x, ShipLocation.y + 1)) {
+			ShipLocation.y++;
 		}
 		notifyObservers();
 
+	}
 
 	@Override
 	public void registerObserver(Observer o) {
