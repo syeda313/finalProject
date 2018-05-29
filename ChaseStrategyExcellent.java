@@ -8,7 +8,7 @@ public class ChaseStrategyExcellent implements ChaseStrategy {
         this.pirate = pirate;
     }
 
-    public void chase(Pirate pirate) {
+    public void chase() {
         // chase method to be implemented
     }
 
