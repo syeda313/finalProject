@@ -1,0 +1,73 @@
+private void move() {
+        
+        int dis_x = shipLocation.x - xLocation;
+        int dis_y = shipLocation.y - yLocation;
+        
+        if ((dis_x == 0 && dis_y == 0) || (Math.abs(shipLocation.x - xLocation) + Math.abs(shipLocation.y - yLocation) == 1)) {
+            System.exit(0);
+        } else {
+            int whichdirection = -1;
+            
+            if (Math.abs(dis_x) > Math.abs(dis_y)) {
+                whichdirection = 0;
+                if (dis_y == 0) {                           // if it is 0 the following code will have 0 has divisor, so I give it a non-0 number instead
+                    if (yLocation > 0) {
+                        dis_y = -1;
+                    } else if (yLocation < dimensions - 1) {
+                        dis_y = 1;
+                    }
+                }
+            } else if (Math.abs(dis_y) > Math.abs(dis_x)) {
+                whichdirection = 1;
+                if (dis_x == 0) {
+                    if (xLocation > 0) {
+                        dis_x = -1;
+                    } else if (xLocation < dimensions - 1) {
+                        dis_x = 1;
+                    }
+                }
+            } else {
+                rand = new Random();
+                whichdirection = rand.nextInt(2);
+            }
+            
+            if (whichdirection == 0) {
+                if (oceanMap.myGrid[xLocation + dis_x / Math.abs(dis_x)][yLocation] == 0) {
+                    oceanMap.myGrid[xLocation][yLocation] = 0;
+                    xLocation += dis_x / Math.abs(dis_x);
+                    oceanMap.myGrid[xLocation][yLocation] = 2;
+                } else if (oceanMap.myGrid[xLocation][yLocation + dis_y / Math.abs(dis_y)] == 0) {
+                    oceanMap.myGrid[xLocation][yLocation] = 0;
+                    yLocation += dis_y / Math.abs(dis_y);
+                    oceanMap.myGrid[xLocation][yLocation] = 2;
+                } else if (oceanMap.myGrid[xLocation][yLocation - dis_y / Math.abs(dis_y)] == 0) {
+                    oceanMap.myGrid[xLocation][yLocation] = 0;
+                    yLocation -= dis_y / Math.abs(dis_y);
+                    oceanMap.myGrid[xLocation][yLocation] = 2;
+                } else if (oceanMap.myGrid[xLocation - dis_x / Math.abs(dis_x)][yLocation] == 0) {
+                    oceanMap.myGrid[xLocation][yLocation] = 0;
+                    xLocation -= dis_x / Math.abs(dis_x);
+                    oceanMap.myGrid[xLocation][yLocation] = 2;
+                }
+            } else {
+                if (oceanMap.myGrid[xLocation][yLocation + dis_y / Math.abs(dis_y)] == 0) {
+                    oceanMap.myGrid[xLocation][yLocation] = 0;
+                    yLocation += dis_y / Math.abs(dis_y);
+                    oceanMap.myGrid[xLocation][yLocation] = 2;
+                } else if (oceanMap.myGrid[xLocation + dis_x / Math.abs(dis_x)][yLocation] == 0) {
+                    oceanMap.myGrid[xLocation][yLocation] = 0;
+                    xLocation += dis_x / Math.abs(dis_x);
+                    oceanMap.myGrid[xLocation][yLocation] = 2;
+                } else if (oceanMap.myGrid[xLocation - dis_x / Math.abs(dis_x)][yLocation] == 0) {
+                    oceanMap.myGrid[xLocation][yLocation] = 0;
+                    xLocation -= dis_x / Math.abs(dis_x);
+                    oceanMap.myGrid[xLocation][yLocation] = 2;
+                } else if (oceanMap.myGrid[xLocation][yLocation - dis_y / Math.abs(dis_y)] == 0) {
+                    oceanMap.myGrid[xLocation][yLocation] = 0;
+                    yLocation -= dis_y / Math.abs(dis_y);
+                    oceanMap.myGrid[xLocation][yLocation] = 2;
+                } 
+            }
+        }
+        
+    }
