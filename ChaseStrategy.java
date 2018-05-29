@@ -2,6 +2,6 @@ package project;
 
 public interface ChaseStrategy {
     
-    public void chase(Pirate pirate);
+    public void chase();
 
 }
