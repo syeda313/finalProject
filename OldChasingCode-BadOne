@@ -1,3 +1,28 @@
+//move method 
+
+	private void movePS() {
+
+		if (rand.nextInt(2) == 1) { // Slow down the cat
+
+			if (PSLocation.x - shipPosition.x < 0 && oceanMap[PSLocation.x + 1][PSLocation.y]==0) {
+				PSLocation.x++;
+				
+			} else if (oceanMap[PSLocation.x - 1][PSLocation.y]==0) {
+				PSLocation.x--;
+			}
+
+			if (PSLocation.y - shipPosition.y < 0 && oceanMap[PSLocation.x][PSLocation.y + 1]==0) {
+				PSLocation.y++;
+			} else if (oceanMap[PSLocation.x][PSLocation.y - 1]==0) {
+				PSLocation.y--;
+			}
+		}
+
+	}
+  -------------------------------------------------
+
+
+
 private void move() {
         
         int dis_x = shipLocation.x - xLocation;
