@@ -67,13 +67,21 @@ public class OceanExplorer extends Application {
 	}
 	// TODO Auto-generated method stub
 
-	private void startSailing() {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 	private void loadShipImage() {
-		// TODO Auto-generated method stub
+		shipImage = new Image("/project/ship.png", scalingFactor, scalingFactor, true, true);
+		shipImageView = new ImageView(shipImage);
+		
+		Pirateship = new Image("/project/pirateShip.png", scalingFactor, scalingFactor, true, true);
+		PirateShipView = new ImageView(Pirateship);
+
+		Pship = new Image("/project/pirateShip.png", scalingFactor, scalingFactor, true, true);
+		PshipView = new ImageView(Pship);
+		
+		root.getChildren().add(shipImageView);
+		root.getChildren().add(PirateShipView);
+		root.getChildren().add(PshipView);
 
 	}
 
@@ -121,11 +129,11 @@ public class OceanExplorer extends Application {
 				shipImageView.setX(ship.getShipLocation().x * scalingFactor);
 				shipImageView.setY(ship.getShipLocation().y * scalingFactor);
 
-				//pirateShipView.setX(pirateShip.getPirateShipLocation().x * scalingFactor);
-				//pirateShipView.setY(pirateShip.getPirateShipLocation().y * scalingFactor);
+				PirateShipView.setX(b.getPirateLocation().x * scalingFactor);
+				PirateShipView.setY(b.getPirateLocation().y * scalingFactor);
 
-				//sShip.setX(pirate.getPirateShipLocation().x * scalingFactor);
-				//sShip.setY(pirate.getPirateShipLocation().y * scalingFactor);
+				PshipView.setX(s.getPirateLocation().x * scalingFactor);
+				PshipView.setY(s.getPirateLocation().y * scalingFactor);
 			}
 		});
 	}
