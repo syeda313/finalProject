@@ -16,7 +16,7 @@ public class ShipColumbus implements Ship {
 		this.oceanMap = oceanMap;
 		dimensions = oceanMap.getDimensions();
 		shipLocation = placeShip();
-
+		oceanMap.updateShipLocation(shipLocation);
 	}
 	
     private Point placeShip(){
@@ -41,6 +41,7 @@ public class ShipColumbus implements Ship {
     	if (shipLocation.x < oceanMap.getDimensions() - 1
     			&& oceanMap.isOcean(shipLocation.x + 1, shipLocation.y)) {
     		shipLocation.x++;
+    		oceanMap.updateShipLocation(shipLocation);
     	}
     	notifyObservers();
 
@@ -49,6 +50,7 @@ public class ShipColumbus implements Ship {
 	public void goWest() {
 		if (shipLocation.x > 0 && oceanMap.isOcean(shipLocation.x - 1, shipLocation.y)) {
 			shipLocation.x--;
+			oceanMap.updateShipLocation(shipLocation);
 		}
 		notifyObservers();
 	}
@@ -56,6 +58,7 @@ public class ShipColumbus implements Ship {
 	public void goNorth() {
 		if (shipLocation.y > 0 && oceanMap.isOcean(shipLocation.x, shipLocation.y - 1)) {
 			shipLocation.y--;
+			oceanMap.updateShipLocation(shipLocation);
 		}
 		notifyObservers();
 	}
@@ -64,6 +67,7 @@ public class ShipColumbus implements Ship {
 		if (shipLocation.y < oceanMap.getDimensions() - 1
 				&& oceanMap.isOcean(shipLocation.x, shipLocation.y + 1)) {
 			shipLocation.y++;
+			oceanMap.updateShipLocation(shipLocation);
 		}
 		notifyObservers();
 	}
@@ -85,7 +89,7 @@ public class ShipColumbus implements Ship {
 	@Override
 	public void notifyObservers() {
 		for (Observer pirateObserver : observers)
-			pirateObserver.update(this);
+			pirateObserver.update();
 		// TODO Auto-generated method stub
 
 	}
