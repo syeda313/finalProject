@@ -8,5 +8,7 @@ public interface Pirate extends Observer{
 
     public OceanMap getOceanMap();
 	
+    public int getPirateID();
+	
 
 }
