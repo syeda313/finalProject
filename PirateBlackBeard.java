@@ -36,9 +36,14 @@ public class PirateBlackBeard implements Pirate {
     }
 
     @Override
-    public void update(Ship ship) {
-        // TODO Auto-generated method stub
+    public void update() {
+        chaseStrategy.chase();
         
+    }
+
+    @Override
+    public OceanMap getOceanMap() {
+        return oceanMap;
     }
 
 }
