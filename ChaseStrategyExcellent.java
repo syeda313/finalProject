@@ -8,8 +8,15 @@ public class ChaseStrategyExcellent implements ChaseStrategy {
         this.pirate = pirate;
     }
 
+    @Override
     public void chase() {
-        // chase method to be implemented
+        
+        
     }
 
+    @Override
+    public void setPirate(Pirate pirate) {
+        this.pirate = pirate;
+        
+    }
 }
