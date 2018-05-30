@@ -1,15 +1,22 @@
 package project;
 
+import java.awt.Point;
+import java.awt.print.Printable;
 import java.util.Random;
 
 public class OceanMap {
 	private int[][] grid;
-	private int dimensions = 50;
+	private int dimensions = 30;
 	Random rand = new Random();
 	private static OceanMap uniqueInstance;
+	
+	private Point shipLocation;
+	private Point[] pirateLocation;
 
 	private OceanMap() {
 		createGrid();
+		shipLocation = new Point(-1, -1);
+		updateShipLocation(shipLocation);
 	}
 
 	public static OceanMap getInstance() {
@@ -34,6 +41,17 @@ public class OceanMap {
 
 	public int getDimensions() {
 		return dimensions;
+	}
+	
+	public void updateShipLocation(Point shipLocation) {
+	    if (this.shipLocation.x != -1) {
+	        grid[this.shipLocation.x][this.shipLocation.y] = 0;
+	        grid[shipLocation.x][shipLocation.y] = 1;
+	    }
+	}
+	
+	public void updatePrivateLocation(Point privateLocation, int privateNumber) {
+	    
 	}
 
 	public boolean isOcean(int x, int y) {
