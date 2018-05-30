@@ -34,11 +34,22 @@ public class PirateDrake implements Pirate {
         }
         return new Point(x,y);
     }
+    
+    public void changeStrategy(ChaseStrategy chaseStrategy) {
+        this.chaseStrategy = chaseStrategy;
+        this.chaseStrategy.setPirate(this);
+    }
 
     @Override
-    public void update(Ship ship) {
+    public void update() {
+        chaseStrategy.chase();
         // TODO Auto-generated method stub
         
+    }
+
+    @Override
+    public OceanMap getOceanMap() {
+        return oceanMap;
     }
 
 }
