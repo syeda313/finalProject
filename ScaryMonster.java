@@ -1,3 +1,5 @@
+package project;
+
 import java.util.Random;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
