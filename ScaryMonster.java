@@ -95,14 +95,14 @@ public class ScaryMonster implements Runnable {
 				e.printStackTrace();
 			}
 			for (Monster result : monsters) {
-				// move x
-				int xMove = result.getX() + random.nextInt(3) - 1;
-				if (xMove >= 0 && xMove <= 50)
-					result.setX(xMove);
-				// move y
-				int yMove = result.getY() + random.nextInt(3) - 1;
-				if (yMove >= 0 && yMove <= 50)
-					result.setY(yMove);
+				// move a
+				int MoveA = result.getX() + random.nextInt(3) - 1;
+				if (MoveA >= 0 && MoveA <= 50)
+					result.setX(MoveA);
+				// move b
+				int MoveB = result.getY() + random.nextInt(3) - 1;
+				if (MoveB >= 0 && MoveB <= 50)
+					result.setY(MoveB);
 			}
 		}
 
