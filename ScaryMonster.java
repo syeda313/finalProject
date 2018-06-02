@@ -1,5 +1,4 @@
 package project;
-
 import java.util.Random;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -17,8 +16,8 @@ class Monster {
 		this.a = a;
 		this.b = b;
 		circle = new Circle();
-		setPositionX(a);
-		setPositionY(b);
+		setPositionA(a);
+		setPositionB(b);
 		circle.setRadius(radius);
 		this.scale = scale;
 	}
@@ -27,29 +26,29 @@ class Monster {
 		return circle;
 	}
 
-	void setX(int a) {
+	void setA(int a) {
 		this.a = a;
-		setPositionX(a);
+		setPositionA(a);
 	}
 
-	void setY(int b) {
+	void setB(int b) {
 		this.b = b;
-		setPositionY(b);
+		setPositionB(b);
 	}
 
-	int getX() {
+	int getA() {
 		return a;
 	}
 
-	int getY() {
+	int getB() {
 		return b;
 	}
 
-	private void setPositionX(int a) {
+	private void setPositionA(int a) {
 		circle.setCenterX(a * scale + (scale / 2));
 	}
 
-	private void setPositionY(int b) {
+	private void setPositionB(int b) {
 		circle.setCenterY(b * scale + (scale / 2));
 	}
 
@@ -96,13 +95,13 @@ public class ScaryMonster implements Runnable {
 			}
 			for (Monster result : monsters) {
 				// move a
-				int MoveA = result.getX() + random.nextInt(3) - 1;
+				int MoveA = result.getA() + random.nextInt(3) - 1;
 				if (MoveA >= 0 && MoveA <= 50)
-					result.setX(MoveA);
+					result.setA(MoveA);
 				// move b
-				int MoveB = result.getY() + random.nextInt(3) - 1;
+				int MoveB = result.getB() + random.nextInt(3) - 1;
 				if (MoveB >= 0 && MoveB <= 50)
-					result.setY(MoveB);
+					result.setB(MoveB);
 			}
 		}
 
