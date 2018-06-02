@@ -38,6 +38,10 @@ public class OceanExplorer extends Application {
 	Pirate[] pirate;
 	Image[] pirateImage;
 	ImageView[] pirateImageView;
+	
+	ScaryMonster ScaryMonster;
+	Thread mons;
+
 
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -57,12 +61,24 @@ public class OceanExplorer extends Application {
 		}
 
 		loadShipImage();
+		
+		ScaryMonster = new ScaryMonster(scalingFactor);
+		ScaryMonster.addToPane(root.getChildren());
+
+		mons = new Thread(ScaryMonster);
+		mons.start();
 
 		scene = new Scene(root, 600, 600);
 		stage.setTitle("Christopher Columbus Sails the Ocean Blue");
 		stage.setScene(scene);
 		stage.show();
 		startSailing();
+	}
+	
+	@SuppressWarnings("deprecation")
+	@Override
+	public void stop() {
+		mons.stop();
 	}
 
 	private void loadShipImage() {
