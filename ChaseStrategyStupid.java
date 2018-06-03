@@ -16,8 +16,6 @@ public class ChaseStrategyStupid implements ChaseStrategy {
 	rand = new Random();
     }
     
-    @Override
-    public void chase() {
         @Override
 	public void chase() {
 		if (rand.nextInt(2) == 1) { // Slow down the cat
