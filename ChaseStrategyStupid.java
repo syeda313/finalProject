@@ -18,25 +18,29 @@ public class ChaseStrategyStupid implements ChaseStrategy {
     
     @Override
     public void chase() {
-        if (rand.nextInt(2) == 1) {
-		if (rand.nextInt(2) == 1) {
-			if (pirate.getPirateLocation().x - oceanMap.getShipLocation().x < 0
-					&& oceanMap.getMap()[pirate.getPirateLocation().x + 1][pirate.getPirateLocation().y] == 0) {
+        @Override
+	public void chase() {
+		if (rand.nextInt(2) == 1) { // Slow down the cat
+			if (pirate.getPirateLocation().x - oceanMap.getShipLocation().x < oceanMap.getDimensions() - 1) {
 				pirate.getPirateLocation().x++;
 				oceanMap.updatePirateLocation(pirate.getPirateLocation(), pirate.getPirateID());
-			} else if (oceanMap.getMap()[pirate.getPirateLocation().x - 1][pirate.getPirateLocation().y] == 0) {
+				System.out.print("------east");
+			} else {
 				pirate.getPirateLocation().x--;
 				oceanMap.updatePirateLocation(pirate.getPirateLocation(), pirate.getPirateID());
+				System.out.print("+++++++west");
 			}
-			if (pirate.getPirateLocation().y - oceanMap.getShipLocation().y < 0
-					&& oceanMap.getMap()[pirate.getPirateLocation().x][pirate.getPirateLocation().y + 1] == 0) {
+			if (pirate.getPirateLocation().y - oceanMap.getShipLocation().y < oceanMap.getDimensions() - 1) {
 				pirate.getPirateLocation().y++;
 				oceanMap.updatePirateLocation(pirate.getPirateLocation(), pirate.getPirateID());
-			} else if (oceanMap.getMap()[pirate.getPirateLocation().x][pirate.getPirateLocation().y - 1] == 0) {
+				System.out.print("========south");
+			} else {
 				pirate.getPirateLocation().y--;
 				oceanMap.updatePirateLocation(pirate.getPirateLocation(), pirate.getPirateID());
+				System.out.print("!!!!!!!!!north");
 			}
 		}
+	}
 			
         
         
