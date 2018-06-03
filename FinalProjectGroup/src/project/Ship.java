@@ -4,17 +4,19 @@ import java.awt.Point;
 
 public interface Ship extends Subject{
 
-    void goEast();
+    public void goEast();
 
-    void goWest();
+    public void goWest();
 
-    void goNorth();
+    public void goNorth();
 
-    void goSouth();
+    public void goSouth();
 
     public Point getShipLocation();
 	
-	
+    public abstract int getLife();
+    
+//	public abstract int addLife();
 	
 	
 	

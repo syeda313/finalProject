@@ -6,15 +6,20 @@ import java.util.Random;
 public class IslandWithTree implements Island {
 
     private OceanMap oceanMap;
-    private Point islandLocation;
-    private Random rand = new Random();
     private int dimensions;
     
+    private Point islandLocation;
+    private int islandID;
     
-    public IslandWithTree(OceanMap oceanMap) {
+    private Random rand = new Random();
+    
+    
+    public IslandWithTree(OceanMap oceanMap, int islandID) {
         this.oceanMap = oceanMap;
+        this.islandID = islandID;
         dimensions = oceanMap.getDimensions();
         islandLocation = placeIsland();
+        oceanMap.setIslandLocation(islandLocation, islandID);
     }
     
     private Point placeIsland() {

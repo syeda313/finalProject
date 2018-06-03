@@ -15,6 +15,7 @@ public class TreasureNewContinent implements Treasure {
         this.oceanMap = oceanMap;
         dimensions = oceanMap.getDimensions();
         treasureLocation = placeTreasure();
+        oceanMap.setTreasureLocation(treasureLocation);
     }
     
     private Point placeTreasure() {

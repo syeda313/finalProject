@@ -12,7 +12,12 @@ public class ShipColumbus implements Ship {
 	private Point shipLocation;
 	private int dimensions;
 	private Random rand = new Random();
+	private int shipLifeLeft = 1;
 
+	public ShipColumbus() {
+	    
+	}
+	
 	public ShipColumbus(OceanMap oceanMap) {
 		this.oceanMap = oceanMap;
 		dimensions = oceanMap.getDimensions();
@@ -33,17 +38,21 @@ public class ShipColumbus implements Ship {
         return new Point(x,y);
     }
 
+    @Override
 	public Point getShipLocation() {
 		return shipLocation;
 	}
 	
+	@Override
+	public int getLife() {
+	    return shipLifeLeft;
+	}
 	
 	public void goEast() {
     	if (shipLocation.x < oceanMap.getDimensions() - 1
     			&& oceanMap.isOcean(shipLocation.x + 1, shipLocation.y)) {
     		shipLocation.x++;
     		oceanMap.updateShipLocation(shipLocation);
-    		winCheck();
     	}
     	notifyObservers();
 
@@ -53,7 +62,6 @@ public class ShipColumbus implements Ship {
 		if (shipLocation.x > 0 && oceanMap.isOcean(shipLocation.x - 1, shipLocation.y)) {
 			shipLocation.x--;
 			oceanMap.updateShipLocation(shipLocation);
-			winCheck();
 		}
 		notifyObservers();
 	}
@@ -62,7 +70,6 @@ public class ShipColumbus implements Ship {
 		if (shipLocation.y > 0 && oceanMap.isOcean(shipLocation.x, shipLocation.y - 1)) {
 			shipLocation.y--;
 			oceanMap.updateShipLocation(shipLocation);
-			winCheck();
 		}
 		notifyObservers();
 	}
@@ -72,37 +79,10 @@ public class ShipColumbus implements Ship {
 				&& oceanMap.isOcean(shipLocation.x, shipLocation.y + 1)) {
 			shipLocation.y++;
 			oceanMap.updateShipLocation(shipLocation);
-			winCheck();
 		}
 		notifyObservers();
 	}
 	
-	public void winCheck() {
-	    if (shipLocation.equals(oceanMap.getTreasureLocation())) {
-//	        Scanner scanner = new Scanner(System.in);
-//	        String string = scanner.nextLine();
-	        for (int i = 0; i <= 5; i++) {
-	            try {
-	                Thread.sleep(1000);
-	            } catch (InterruptedException e) {
-	                e.printStackTrace();
-	            }
-	            for (int j = 0; j <= i; j++) {
-	                System.out.print(".");
-	            }
-	            System.out.println("");
-	        }
-	        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-	        try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-	        System.out.println("COLUMBUS FOUND THE NEW CONTINENT. HISTORY DISCOVERED.");
-	        System.exit(0);
-	        
-	    }
-	}
 
 
 	@Override
@@ -122,8 +102,6 @@ public class ShipColumbus implements Ship {
 	public void notifyObservers() {
 		for (Observer pirateObserver : observers)
 			pirateObserver.update();
-		// TODO Auto-generated method stub
-
 	}
 
 

@@ -13,19 +13,35 @@ public class OceanMap {
 	
 	private Point shipLocation;
 	private Point[] pirateLocation;
+	private int numberOfPirate;
 	private Point[] islandLocation;
+	private int numberOfIsland;
 	private Point treasureLocation;
+	
+	private int shipLifeLeft;
+	//TODO: remains to be initialized and valued
 
-	private OceanMap() {
+	private OceanMap(int numberOfPirate, int numberOfIsland) {
+	    
 		createGrid();
-		treasureLocation = placeTreasur();
+		
+		this.numberOfPirate = numberOfPirate;
+		pirateLocation = new Point[numberOfPirate];
+		this.numberOfIsland = numberOfIsland;
+		islandLocation = new Point[numberOfIsland];
+		
 		shipLocation = new Point(-1, -1);
-		updateShipLocation(shipLocation);
+		
+		for (int i = 0; i < this.numberOfPirate; i++) {
+		    pirateLocation[i] = new Point(-1, -1);
+		}
+		
+		
 	}
 
-	public static OceanMap getInstance() {
+	public static OceanMap getInstance(int numberOfPirate, int numberOfIsland) {
 		if (uniqueInstance == null) {
-			uniqueInstance = new OceanMap();
+			uniqueInstance = new OceanMap(numberOfPirate, numberOfIsland);
 		}
 		return uniqueInstance;
 
@@ -38,20 +54,6 @@ public class OceanMap {
 				grid[x][y] = 0;
 
 	}
-	
-    private Point placeTreasur() {
-        boolean treasurePlaced = false;
-        int x = 0, y = 0;
-        while(!treasurePlaced){
-            x = rand.nextInt(dimensions);
-            y = rand.nextInt(dimensions);
-            if(getMap()[x][y] == 0){
-                treasurePlaced = true;
-            }
-        }
-        System.out.println("Treasure located at (" + x + ", " + y + ")");
-        return new Point(x,y);
-    }
 
 	public int[][] getMap() {
 		return grid;
@@ -77,17 +79,43 @@ public class OceanMap {
 	    return treasureLocation;
 	}
 	
+	public int getShipLife() {
+	    return shipLifeLeft;
+	}
+	
 	public void updateShipLocation(Point shipLocation) {
 	    if (this.shipLocation.x != -1) {
 	        grid[this.shipLocation.x][this.shipLocation.y] = 0;
-	        grid[shipLocation.x][shipLocation.y] = 1;
 	    }
+	    this.shipLocation = (Point) shipLocation.clone();          // NEVER FORGET THAT YOU CAN'T USE = BETWEEN OBJECTS
+        grid[this.shipLocation.x][this.shipLocation.y] = 1;
+        
+        winCheck();
 	}
 	
-	public void updatePirateLocation(Point privateLocation, int privateNumber) {
-	    
+    public void updatePirateLocation(Point pirateLocation, int pirateNumber) {
+	    if (this.pirateLocation[pirateNumber].x != -1) {
+            grid[this.pirateLocation[pirateNumber].x][this.pirateLocation[pirateNumber].y] = 0;
+	    }
+	    this.pirateLocation[pirateNumber] = (Point) pirateLocation.clone();
+        grid[this.pirateLocation[pirateNumber].x][this.pirateLocation[pirateNumber].y] = 2;
+        
+        loseCheck(pirateNumber);
+	}
+	
+    public void setTreasureLocation(Point treasureLocation) {
+	    this.treasureLocation = treasureLocation;
 	}
 
+	public void setIslandLocation(Point islandLocation, int islandNumber) {
+        this.islandLocation[islandNumber] = islandLocation;
+        grid[this.islandLocation[islandNumber].x][this.islandLocation[islandNumber].y] = 3;
+	}
+	
+	public void setShipLife(int life) {
+	    this.shipLifeLeft = life;
+	}
+	
 	public boolean isOcean(int x, int y) {
 		if (grid[x][y] == 0)
 			return true;
@@ -95,5 +123,77 @@ public class OceanMap {
 			return false;
 	}
 
+    public void setNumberOfPirate(int numberOfPirate) {
+        this.numberOfPirate = numberOfPirate;    
+    }
+
+    public void setNumberOfIsland(int numberOfIsland) {
+        this.numberOfIsland = numberOfIsland; 
+    }
+
+    private void winCheck() {
+        if (shipLocation.equals(treasureLocation)) {
+//          Scanner scanner = new Scanner(System.in);
+//          String string = scanner.nextLine();
+            winProcedure();
+        }
+    }
     
+    private void loseCheck(int pirateNumber) {
+        // TODO Auto-generated method stub
+        if (pirateLocation[pirateNumber].equals(shipLocation)) {
+//            if (shipLifeLeft == 1) {
+//                loseProcedure();
+//            } else {
+//                shipLifeLeft--;
+//                columbusReborn();
+//            }
+            loseProcedure();
+        }
+    }
+    
+    private void winProcedure() {
+        for (int i = 0; i <= 5; i++) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            for (int j = 0; j <= i; j++) {
+                System.out.print(".");
+            }
+            System.out.println("");
+        }
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("COLUMBUS FOUND THE NEW CONTINENT. HISTORY DISCOVERED.");
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.exit(0);
+    }
+    
+    private void loseProcedure() {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Unfortunately, Mr.Columbus was caught by pirate.");
+        System.exit(0);
+    }
+
+    private void columbusReborn() {
+        int x = rand.nextInt(dimensions);
+        int y = rand.nextInt(dimensions);
+        if (isOcean(x, y)) {
+            
+        }
+    }
 }

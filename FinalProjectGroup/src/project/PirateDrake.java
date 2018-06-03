@@ -5,12 +5,14 @@ import java.util.Random;
 
 public class PirateDrake implements Pirate {
 
-    OceanMap oceanMap;
-    Point pirateLocation;
-    ChaseStrategy chaseStrategy;
-    int pirateID;
-    int dimensions;
-    Random rand = new Random();
+    private OceanMap oceanMap;
+    private int dimensions;
+    
+    private Point pirateLocation;
+    private ChaseStrategy chaseStrategy;
+    private int pirateID;
+    
+    private Random rand = new Random();
     
     public PirateDrake(OceanMap oceanMap, int pirateID) {
         this.oceanMap = oceanMap;
@@ -18,6 +20,7 @@ public class PirateDrake implements Pirate {
         dimensions = oceanMap.getDimensions();    // set the attributes first before it is used!!!!!!!!!!!!!!
         pirateLocation = placePirate();
         chaseStrategy = new ChaseStrategyStupid(this);
+        oceanMap.updatePirateLocation(getPirateLocation(), getPirateID());
     }
     
     public Point getPirateLocation() {
@@ -49,8 +52,6 @@ public class PirateDrake implements Pirate {
     @Override
     public void update() {
         chaseStrategy.chase();
-        // TODO Auto-generated method stub
-        
     }
 
     @Override
