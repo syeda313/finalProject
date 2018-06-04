@@ -19,7 +19,7 @@ public class PirateDrake implements Pirate {
         this.pirateID = pirateID;
         dimensions = oceanMap.getDimensions();    // set the attributes first before it is used!!!!!!!!!!!!!!
         pirateLocation = placePirate();
-        chaseStrategy = new ChaseStrategyStupid(this);
+        chaseStrategy = new ChaseStrategyNormal(this);
         oceanMap.updatePirateLocation(getPirateLocation(), getPirateID());
     }
     

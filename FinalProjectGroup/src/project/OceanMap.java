@@ -112,7 +112,7 @@ public class OceanMap {
         grid[this.islandLocation[islandNumber].x][this.islandLocation[islandNumber].y] = 3;
 	}
 	
-	public void setShipLife(int life) {
+	public void updateShipLife(int life) {
 	    this.shipLifeLeft = life;
 	}
 	
@@ -140,15 +140,18 @@ public class OceanMap {
     }
     
     private void loseCheck(int pirateNumber) {
-        // TODO Auto-generated method stub
+        System.out.println("------");
+        System.out.println("It's a sunny day.");
+        System.out.println("Columbus has " + shipLifeLeft + " lifes left.");
         if (pirateLocation[pirateNumber].equals(shipLocation)) {
-//            if (shipLifeLeft == 1) {
-//                loseProcedure();
-//            } else {
-//                shipLifeLeft--;
-//                columbusReborn();
-//            }
-            loseProcedure();
+            System.out.println("Columbus collides with pirate.");
+            if (shipLifeLeft == 1) {
+                loseProcedure();
+            } else {
+                shipLifeLeft--;
+                columbusReborn();
+            }
+            System.out.println("Columbus only has " + shipLifeLeft + " lifes left now.");
         }
     }
     
@@ -190,10 +193,17 @@ public class OceanMap {
     }
 
     private void columbusReborn() {
-        int x = rand.nextInt(dimensions);
-        int y = rand.nextInt(dimensions);
-        if (isOcean(x, y)) {
-            
+        int x;
+        int y;
+        while (true) {
+            x = rand.nextInt(dimensions);
+            y = rand.nextInt(dimensions);
+            if (isOcean(x, y)) {
+                shipLocation = new Point(x, y);
+                System.out.println("Columbus is relocated at " + "(" + x + ", " + y + ")");
+                break;
+            } 
         }
+        
     }
 }

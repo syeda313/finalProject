@@ -7,6 +7,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import org.junit.experimental.theories.Theories;
+
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.layout.AnchorPane;
@@ -16,61 +18,48 @@ import javafx.stage.Stage;
 
 public class OceanExplorer extends Application {
     
-	int[][] islandMap;
-	AnchorPane root;
-	int dimensions;
-	int scalingFactor;
+	private int[][] islandMap;
+	private AnchorPane root;
+	private int dimensions;
+	private int scalingFactor;
 	
-	OceanMap oceanMap;
-	Scene scene;
+	private OceanMap oceanMap;
+	private Scene scene;
 
-	Image shipImage;
-	ImageView shipImageView;
+	private Image shipImage;
+	private ImageView shipImageView;
 
-	Pirate[] pirate;
-	int numberOfPirate = 2;
-    Image[] pirateImage;
-    ImageView[] pirateImageView;
+	private Pirate[] pirate;
+	private int numberOfPirate = 2;
+    private Image[] pirateImage;
+    private ImageView[] pirateImageView;
 
-    Island[] island;
-    int numberOfIsland = 10;
-	Image[] islandImage;
-	ImageView[] islandImageView;
+    private Island[] island;
+    private int numberOfIsland = 20;
+	private Image[] islandImage;
+	private ImageView[] islandImageView;
 	
-	Treasure treasure;
-	Image treasureImage;
-	ImageView treasureImageView;
+	private Treasure treasure;
+	private Image treasureImage;
+	private ImageView treasureImageView;
 
-	Ship ship;
+	private Ship ship;
 	
-	Monster monster;
-    Thread monstersThread;
+	private Monster monster;
+    private Thread monstersThread;
 
-    
-    
-    
 	@Override
 	public void start(Stage stage) throws Exception {
-		oceanMap = OceanMap.getInstance(numberOfPirate, numberOfIsland);
-		islandMap = oceanMap.getMap();
-		dimensions = oceanMap.getDimensions();
-		scalingFactor = oceanMap.getScalingFactor();
-
-		root = new AnchorPane();
-		drawMap();
-		
-		monster = new Monster(dimensions, scalingFactor);
-        monster.addToPane(root.getChildren());
-        stage.show();
+	    
+	    oceanMap = OceanMap.getInstance(numberOfPirate, numberOfIsland);
+        islandMap = oceanMap.getMap();
+        dimensions = oceanMap.getDimensions();
+        scalingFactor = oceanMap.getScalingFactor();
         
-        monstersThread = new Thread(monster);
-        monstersThread.start();
-
-		ship = new ShipColumbus(oceanMap);
-		
-		System.out.println("------");
-		System.out.println("Please choose which pirate you want:");
-		pirate = new Pirate[numberOfPirate];
+        ship = new ShipColumbus(oceanMap);
+        addLifeToColumbus();
+        
+        pirate = new Pirate[numberOfPirate];
         for (int i = 0; i < numberOfPirate; i++) {
             pirate[i] = new PirateDrake(oceanMap, i);
             ship.registerObserver(pirate[i]);
@@ -82,7 +71,17 @@ public class OceanExplorer extends Application {
         }
         
         treasure = new TreasureNewContinent(oceanMap);
+	    
+		root = new AnchorPane();
+		drawMap();
+		
+		monster = new Monster(dimensions, scalingFactor);
+        monster.addToPane(root.getChildren());
+        stage.show();
         
+        monstersThread = new Thread(monster);
+        monstersThread.start();
+
 		loadImages();
 
 		scene = new Scene(root, 600, 600);
@@ -94,9 +93,10 @@ public class OceanExplorer extends Application {
 
 	private void startSailing(){
         scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
-
+            
             @Override
             public void handle(KeyEvent ke) {
+                ship.updateShipLocation(oceanMap.getShipLocation());
                 switch(ke.getCode()){
                 case RIGHT:
                     ship.goEast();
@@ -115,8 +115,8 @@ public class OceanExplorer extends Application {
                 }
 //                mapReader();
                 
-                shipImageView.setX(ship.getShipLocation().x*scalingFactor);
-                shipImageView.setY(ship.getShipLocation().y*scalingFactor);
+                shipImageView.setX(oceanMap.getShipLocation().x*scalingFactor);
+                shipImageView.setY(oceanMap.getShipLocation().y*scalingFactor);
                 
                 for (int i = 0; i < numberOfPirate; i++) {
                     pirateImageView[i].setX(pirate[i].getPirateLocation().x * scalingFactor);
@@ -167,19 +167,10 @@ public class OceanExplorer extends Application {
 	private void drawMap() {
 		for (int x = 0; x < dimensions; x++) {
 			for (int y = 0; y < dimensions; y++) {
-
-				if (islandMap[x][y] == 0) {
-					Rectangle rect = new Rectangle(x * scalingFactor, y * scalingFactor, scalingFactor, scalingFactor);
-					rect.setStroke(Color.BLACK);
-					rect.setFill(Color.PALETURQUOISE);
-					root.getChildren().add(rect);
-				} else // Need to load an image
-				{
-					Rectangle rect = new Rectangle(x * scalingFactor, y * scalingFactor, scalingFactor, scalingFactor);
-					rect.setStroke(Color.BLACK);
-					rect.setFill(Color.RED);
-					root.getChildren().add(rect);
-				}
+			    Rectangle rect = new Rectangle(x * scalingFactor, y * scalingFactor, scalingFactor, scalingFactor);
+			    rect.setStroke(Color.BLACK);
+			    rect.setFill(Color.PALETURQUOISE);
+			    root.getChildren().add(rect);
 			}
 		}
 	}
@@ -206,12 +197,19 @@ public class OceanExplorer extends Application {
         }
 	}
 	
-	public void run() {
+	public void startGame() {
+	    System.out.println("START GAME");
 	    launch();
 	}
 
-//	public static void main(String[] args) {
-//		launch(args);
-//	}
+    public void addLifeToColumbus() {
+        ship = new ShipColumbusSuperPowerOfAddLife(ship);
+        oceanMap.updateShipLife(ship.getLife());
+    }
+
+	public static void main(String[] args) {
+//	    this.addLifeToColumbus();
+		launch(args);
+	}
 
 }

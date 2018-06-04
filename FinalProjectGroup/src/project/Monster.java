@@ -85,7 +85,7 @@ public class Monster implements Runnable {
 		for(MonsterSprite monsterSprite: monsterSprites){
 			
 			Circle circle = monsterSprite.getCircle();
-			System.out.println("Adding circle to pane: " + circle.getCenterX() + " " + circle.getCenterY() + " " + radius);
+//			System.out.println("Adding circle to pane: " + circle.getCenterX() + " " + circle.getCenterY() + " " + radius);
 			sceneGraph.add(circle);
 		}
 	}

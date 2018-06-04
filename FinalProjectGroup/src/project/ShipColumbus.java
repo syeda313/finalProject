@@ -23,6 +23,7 @@ public class ShipColumbus implements Ship {
 		dimensions = oceanMap.getDimensions();
 		shipLocation = placeShip();
 		oceanMap.updateShipLocation(shipLocation);
+		oceanMap.updateShipLife(getLife());
 	}
 	
     private Point placeShip(){
@@ -35,12 +36,18 @@ public class ShipColumbus implements Ship {
                 placedShip = true;
             }
         }
+        System.out.println("Ship start at (" + x + ", " + y + ")");
         return new Point(x,y);
     }
 
     @Override
+    public void updateShipLocation(Point newShipLocation) {
+        this.shipLocation = (Point) newShipLocation.clone();
+    }
+    
+    @Override
 	public Point getShipLocation() {
-		return shipLocation;
+        return shipLocation;
 	}
 	
 	@Override
@@ -48,6 +55,7 @@ public class ShipColumbus implements Ship {
 	    return shipLifeLeft;
 	}
 	
+	@Override
 	public void goEast() {
     	if (shipLocation.x < oceanMap.getDimensions() - 1
     			&& oceanMap.isOcean(shipLocation.x + 1, shipLocation.y)) {
@@ -58,6 +66,7 @@ public class ShipColumbus implements Ship {
 
 	}
 
+	@Override
 	public void goWest() {
 		if (shipLocation.x > 0 && oceanMap.isOcean(shipLocation.x - 1, shipLocation.y)) {
 			shipLocation.x--;
@@ -66,6 +75,7 @@ public class ShipColumbus implements Ship {
 		notifyObservers();
 	}
 
+	@Override
 	public void goNorth() {
 		if (shipLocation.y > 0 && oceanMap.isOcean(shipLocation.x, shipLocation.y - 1)) {
 			shipLocation.y--;
@@ -74,6 +84,7 @@ public class ShipColumbus implements Ship {
 		notifyObservers();
 	}
 
+	@Override
 	public void goSouth() {
 		if (shipLocation.y < oceanMap.getDimensions() - 1
 				&& oceanMap.isOcean(shipLocation.x, shipLocation.y + 1)) {
@@ -104,5 +115,24 @@ public class ShipColumbus implements Ship {
 			pirateObserver.update();
 	}
 
+    
+	@Override
+	public OceanMap getOceanMap() {
+	    return this.oceanMap;
+	}
+	
+	@Override
+	public int getDimensions() {
+	    return this.dimensions;
+	}
+
+    @Override
+    public List<Observer> getObservers() {
+        return this.observers;
+    }
+
+    public void getName() {
+        System.out.println("normal columbus");
+    }
 
 }
