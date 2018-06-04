@@ -18,25 +18,23 @@ public class ChaseStrategyStupid implements ChaseStrategy {
     
         @Override
 	public void chase() {
-		if (rand.nextInt(2) == 1) { // Slow down the cat
-			if (pirate.getPirateLocation().x - oceanMap.getShipLocation().x < oceanMap.getDimensions() - 1) {
-				pirate.getPirateLocation().x++;
-				oceanMap.updatePirateLocation(pirate.getPirateLocation(), pirate.getPirateID());
-				System.out.print("------east");
-			} else {
-				pirate.getPirateLocation().x--;
-				oceanMap.updatePirateLocation(pirate.getPirateLocation(), pirate.getPirateID());
-				System.out.print("+++++++west");
-			}
-			if (pirate.getPirateLocation().y - oceanMap.getShipLocation().y < oceanMap.getDimensions() - 1) {
-				pirate.getPirateLocation().y++;
-				oceanMap.updatePirateLocation(pirate.getPirateLocation(), pirate.getPirateID());
-				System.out.print("========south");
-			} else {
-				pirate.getPirateLocation().y--;
-				oceanMap.updatePirateLocation(pirate.getPirateLocation(), pirate.getPirateID());
-				System.out.print("!!!!!!!!!north");
-			}
+		this.pirateLocation = pirate.getPirateLocation();
+		this.shipLocation = oceanMap.getShipLocation();
+
+		this.dis_x = pirateLocation.x - shipLocation.x;
+		this.dis_y = pirateLocation.y - shipLocation.y;
+
+		if (rand.nextInt(2) == 1) {
+
+			if (this.pirateLocation.x - this.shipLocation.x < 0)
+				this.pirateLocation.x++;
+			else
+				this.pirateLocation.x--;
+
+			if (this.pirateLocation.y - this.shipLocation.y < 0)
+				this.pirateLocation.y++;
+			else
+				this.pirateLocation.y--;
 		}
 	}
 			
