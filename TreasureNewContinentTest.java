@@ -17,13 +17,13 @@ public class TreasureNewContinentTest {
 	}
 
 	@Test
-	public void testTreasure2() {
+	public void testTreasureNotAtOtherLocation() {
 		TreasureNewContinent treasure = new TreasureNewContinent(oceanMap);
 		assertTrue(!(treasure.getTreasureLocation().equals(oceanMap.getShipLocation())));
 	}
 
 	@Test
-	public void testPlacetreasure() {
+	public void testLocations() {
 		TreasureNewContinent treasure = new TreasureNewContinent(oceanMap);
 		treasure.getTreasureLocation();
 		assertEquals(treasure.getTreasureLocation(), oceanMap.getTreasureLocation());
